@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avinash Karri | Applied AI Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #0f172a; color: white; margin: 0; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+
+        /* NEURAL BACKGROUND */
+        #neural-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; transition: filter 0.5s ease;
+        }
+
+        /* GLASS CARDS */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        /* ANIMATIONS */
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        .text-gradient { background: linear-gradient(to right, #67e8f9, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* HERO TRANSITIONS */
+        #initial-hero { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 50; transition: all 0.8s ease; pointer-events: none; }
+        .fade-out-up { opacity: 0; transform: translateY(-50px) scale(0.9); pointer-events: none; }
+
+        /* SIDEBAR */
+        #sidebar-container { opacity: 0; transform: translateX(-20px); transition: all 1s ease; }
+        #sidebar-container.visible { opacity: 1; transform: translateX(0); }
+
+        /* TOOLTIPS */
+        .skill-icon-wrapper { position: relative; }
+        .skill-tooltip {
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+            padding: 4px 8px; background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px; font-size: 10px; opacity: 0; transition: opacity 0.2s; pointer-events: none; margin-bottom: 5px; z-index: 20;
+        }
+        .skill-icon-wrapper:hover .skill-tooltip { opacity: 1; }
+
+        /* TIMELINE */
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #3b82f6, #8b5cf6, rgba(0,0,0,0)); }
+
+        /* DIAGRAMS */
+        .diagram-box { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.4); padding: 0.75rem; border-radius: 0.5rem; text-align: center; font-size: 0.8rem; color: #cbd5e1; }
+        .diagram-arrow { display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 1.2rem; }
+        
+        /* RESEARCH CANVAS */
+        #latent-wrapper { position: relative; height: 400px; width: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body class="font-sans selection:bg-cyan-500/30">
+
+    <canvas id="neural-canvas"></canvas>
+
+    <div id="initial-hero" data-section-theme="34,211,238">
+        <p class="text-cyan-400 font-mono mb-4 tracking-widest animate-pulse">> SYSTEM_ONLINE</p>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-6 text-center">Hi, I'm <span class="text-white">Avinash</span></h1>
+        <p class="text-slate-400 text-lg md:text-xl font-mono text-center max-w-lg px-4">Initializing neural interface... <span class="text-emerald-400">Connection Established.</span></p>
+        <div class="mt-12 animate-bounce text-slate-500"><i data-lucide="chevron-down" class="w-8 h-8"></i></div>
+    </div>
+
+    <main class="relative">
+
+        <div class="min-h-[110vh] flex flex-col md:flex-row pt-[50vh]" data-section-theme="34,211,238">
+            <div class="md:w-1/3 relative z-20 hidden md:block">
+                <div class="sticky top-0 h-screen flex flex-col justify-center px-8 md:px-12 py-12 border-r border-white/5 bg-slate-900/20 backdrop-blur-sm">
+                    <div id="sidebar-container">
+                        <h2 class="text-3xl font-bold tracking-tight text-white mb-2">AVINASH KARRI</h2>
+                        <p class="text-xs font-mono text-cyan-400 tracking-widest mb-8">APPLIED AI/ML ENGINEER</p>
+                        <div class="flex gap-6 text-slate-400">
+                            <a href="https://github.com/Avi2099GIT" target="_blank" class="hover:text-white transition-colors hover:scale-110 transform"><i data-lucide="github" class="w-6 h-6"></i></a>
+                            <a href="https://www.linkedin.com/in/avinashkarri/" target="_blank" class="hover:text-white transition-colors hover:scale-110 transform"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                            <a href="mailto:avinashkarri03@gmail.com" class="hover:text-white transition-colors hover:scale-110 transform"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                        </div>
+                        <div class="mt-12 pt-12 border-t border-white/10">
+                            <a href="AvinashKarri_Resume.pdf" download class="text-xs font-mono text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+                                <i data-lucide="download" class="w-4 h-4"></i> DOWNLOAD_CV
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-2/3 px-8 md:px-20 pb-20 flex items-center">
+                <div id="summary-content" class="max-w-2xl space-y-8 opacity-0 translate-y-20 transition-all duration-1000">
+                    <div class="w-12 h-1 bg-cyan-500 rounded-full mb-8"></div>
+                    <h3 class="text-3xl md:text-5xl font-bold leading-tight text-slate-200">Bridging the gap between <span class="text-gradient">Research</span> and <span class="text-gradient">Production</span>.</h3>
+                    <p class="text-slate-400 text-lg leading-relaxed">I am an Applied AI Engineer passionate about architecting intelligent systems that work in the real world. While research pushes boundaries, my focus is on reliability, scalability, and impact.</p>
+                    <p class="text-slate-400 text-lg leading-relaxed">I specialize in building robust <strong>RAG pipelines</strong>, orchestrating <strong>Multi-Agent frameworks</strong>, and optimizing <strong>Large Language Models</strong> for enterprise environments.</p>
+                    
+                    <div class="mt-12 animate-bounce text-slate-500 flex justify-center md:justify-start">
+                        <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="min-h-[60vh] px-6 py-20 relative z-10 flex flex-col justify-center" data-section-theme="59,130,246">
+            <div class="max-w-4xl mx-auto w-full pl-8 relative">
+                <div class="reveal-on-scroll mb-12">
+                    <h2 class="text-3xl font-bold text-white">The Trek</h2>
+                    <p class="text-blue-400 font-mono mt-2">CAREER_TIMELINE</p>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="space-y-12">
+                    <div class="reveal-on-scroll relative pl-12">
+                        <div class="absolute left-[16px] top-1 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
+                        <h3 class="text-xl font-bold text-white">AI & Automation Engineer</h3>
+                        <div class="text-sm text-slate-400 mb-2 font-mono">ALSTOM • 2024 - Present</div>
+                        <div class="glass-card p-6 rounded-xl border-blue-500/20 bg-blue-900/10">
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Leading automation initiatives for mission-critical systems. Designed and deployed <strong class="text-white">applications</strong> and inference services that eliminated <strong class="text-white">100% of manual effort</strong> in key workflows and improved process efficiency by <strong class="text-white">25%</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 animate-bounce text-slate-500 flex justify-center">
+                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen px-6 py-20 relative z-10 flex flex-col justify-center bg-black/20 backdrop-blur-sm" data-section-theme="16,185,129">
+            <div class="max-w-6xl mx-auto w-full">
+                <div class="reveal-on-scroll mb-16 border-l-4 border-emerald-400 pl-6">
+                    <h2 class="text-4xl font-bold text-white">Technical Arsenal</h2>
+                    <p class="text-emerald-400/80 font-mono mt-2">STACK_OVERVIEW && CAPABILITIES</p>
+                </div>
+                <div id="category-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+                <div class="mt-16 animate-bounce text-slate-500 flex justify-center">
+                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen px-6 py-20 relative z-10" data-section-theme="245,158,11">
+            <div class="max-w-6xl mx-auto">
+                <div class="reveal-on-scroll mb-20 text-center"><h2 class="text-4xl font-bold text-amber-300">Featured Deployments</h2><div class="w-20 h-1 bg-amber-500/50 mx-auto mt-4 rounded-full"></div></div>
+                
+                <div class="reveal-on-scroll grid md:grid-cols-2 gap-8 items-center mb-24">
+                    <div onclick="toggleModal('asteria')" class="glass-card p-8 rounded-2xl border-amber-500/20 relative overflow-hidden group hover:border-amber-500/50 cursor-pointer">
+                        <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="layers" class="w-12 h-12 text-amber-500"></i></div>
+                        <div class="flex items-center gap-3 mb-2"><h3 class="text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">Asteria AIOps</h3><span class="px-2 py-0.5 text-[10px] font-mono bg-amber-500/20 text-amber-300 rounded border border-amber-500/30">BLUEPRINT</span></div>
+                        <p class="text-xs font-mono text-amber-400 mb-4">TorchServe • FastAPI • ChromaDB</p><p class="text-slate-400 leading-relaxed">Full-stack ML-driven SaaS with CI/CD delivery pipelines and automated Root Cause Analysis (RCA).</p>
+                        <div class="mt-4 flex items-center text-xs text-amber-300 font-mono gap-2 group-hover:translate-x-2 transition-transform">VIEW ARCHITECTURE <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    <div class="flex justify-center"><div class="relative flex items-center justify-center w-64 h-64"><div class="absolute inset-0 bg-amber-600/20 blur-[60px] rounded-full"></div><div class="relative z-10 w-48 h-48 border border-amber-500/30 bg-amber-950/40 rounded-full backdrop-blur-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 transition-transform duration-500"><div class="text-xl font-bold text-amber-400">RELIABLE</div><div class="text-xs font-mono text-amber-200 mt-1">ENTERPRISE INFERENCE</div></div></div></div>
+                </div>
+
+                <div class="reveal-on-scroll grid md:grid-cols-2 gap-8 items-center mb-24">
+                    <div class="flex justify-center order-2 md:order-1"><div class="relative flex items-center justify-center w-64 h-64"><div class="absolute inset-0 bg-purple-600/20 blur-[60px] rounded-full"></div><div class="relative z-10 w-48 h-48 border border-purple-500/30 bg-purple-950/40 rounded-full backdrop-blur-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 transition-transform duration-500"><div class="text-xl font-bold text-purple-400">HYBRID</div><div class="text-xs font-mono text-purple-200 mt-1">EDGE + CLOUD OS</div></div></div></div>
+                    <div onclick="toggleModal('cypher')" class="glass-card p-8 rounded-2xl border-purple-500/20 relative overflow-hidden group hover:border-purple-500/50 cursor-pointer order-1 md:order-2">
+                        <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="cpu" class="w-12 h-12 text-purple-500"></i></div>
+                        <div class="flex items-center gap-3 mb-2"><h3 class="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">Project Cypher</h3><span class="px-2 py-0.5 text-[10px] font-mono bg-purple-500/20 text-purple-300 rounded border border-purple-500/30">BLUEPRINT</span></div>
+                        <p class="text-xs font-mono text-purple-400 mb-4">Hybrid OS • LangGraph • Edge AI</p><p class="text-slate-400 leading-relaxed">A hybrid personal AI Operating System combining local edge processing (Wake-word, ASR) with a Cloud Brain.</p>
+                        <div class="flex items-center text-xs text-purple-300 font-mono gap-2 group-hover:translate-x-2 transition-transform">VIEW BLUEPRINT <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                </div>
+
+                <div class="reveal-on-scroll grid md:grid-cols-2 gap-8 items-center">
+                    <div onclick="toggleModal('rag')" class="glass-card p-8 rounded-2xl border-blue-500/20 relative overflow-hidden group hover:border-blue-500/50 cursor-pointer">
+                        <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="database" class="w-12 h-12 text-blue-500"></i></div>
+                        <div class="flex items-center gap-3 mb-2"><h3 class="text-2xl font-bold text-white group-hover:text-blue-300 transition-colors">Enterprise RAG Chatbot</h3><span class="px-2 py-0.5 text-[10px] font-mono bg-blue-500/20 text-blue-300 rounded border border-blue-500/30">BLUEPRINT</span></div>
+                        <p class="text-xs font-mono text-blue-400 mb-4">Azure AI Foundry • Blob Storage</p><p class="text-slate-400 leading-relaxed">GenAI-powered multimodal retrieval system designed for <strong class="text-blue-300">High-Precision Semantic Search</strong> and document explanation.</p>
+                        <div class="mt-4 flex items-center text-xs text-blue-300 font-mono gap-2 group-hover:translate-x-2 transition-transform">VIEW ARCHITECTURE <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    <div class="flex justify-center"><div class="relative flex items-center justify-center w-64 h-64"><div class="absolute inset-0 bg-blue-600/20 blur-[60px] rounded-full"></div><div class="relative z-10 w-48 h-48 border border-blue-500/30 bg-blue-950/40 rounded-full backdrop-blur-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 transition-transform duration-500"><div class="text-xl font-bold text-blue-400">CONTEXT</div><div class="text-xs font-mono text-blue-200 mt-1">AWARE RETRIEVAL</div></div></div></div>
+                </div>
+
+                <div class="mt-16 animate-bounce text-slate-500 flex justify-center">
+                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[50vh] px-6 py-20 relative z-10 flex flex-col justify-center bg-black/30 backdrop-blur-sm" data-section-theme="168,85,247">
+            <div class="max-w-5xl mx-auto w-full">
+                <div class="reveal-on-scroll mb-12 text-center">
+                    <h2 class="text-3xl font-bold text-white">Certifications</h2>
+                    <p class="text-purple-400 font-mono mt-2">VALIDATED_KNOWLEDGE</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-xl border-blue-500/30 hover:border-blue-400/50 group relative flex flex-col md:flex-row items-start md:items-center gap-4 transition-all hover:scale-[1.02]">
+                        <div class="p-3 bg-blue-500/20 rounded-lg text-blue-400"><i data-lucide="cloud" class="w-8 h-8"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-white font-bold text-sm">Microsoft Azure AI-900</h3>
+                            <p class="text-xs text-slate-400 font-mono mt-1">AI Fundamentals</p>
+                        </div>
+                        <a href="https://learn.microsoft.com/api/credentials/share/en-us/AvinashKarri-0414/171D88E999DE685F?sharingId=4BD2234E94D45785" target="_blank" class="flex items-center text-xs text-blue-300 font-mono gap-2 group-hover:translate-x-1 transition-transform mt-4 md:mt-0">
+                            VIEW CERTIFICATE <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border-yellow-500/30 hover:border-yellow-400/50 group relative flex flex-col md:flex-row items-start md:items-center gap-4 transition-all hover:scale-[1.02]">
+                        <div class="p-3 bg-yellow-500/20 rounded-lg text-yellow-400"><i data-lucide="cloud-lightning" class="w-8 h-8"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-white font-bold text-sm">Google Cloud Skills</h3>
+                            <p class="text-xs text-slate-400 font-mono mt-1">Public Profile</p>
+                        </div>
+                        <a href="https://www.skills.google/public_profiles/3d9b435f-db59-420c-9b2f-963f28975d5e" target="_blank" class="flex items-center text-xs text-yellow-300 font-mono gap-2 group-hover:translate-x-1 transition-transform mt-4 md:mt-0">
+                            VIEW CERTIFICATE <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border-blue-400/30 hover:border-blue-300/50 group relative flex flex-col md:flex-row items-start md:items-center gap-4 transition-all hover:scale-[1.02]">
+                        <div class="p-3 bg-blue-400/20 rounded-lg text-blue-300"><i data-lucide="clipboard-check" class="w-8 h-8"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-white font-bold text-sm">Google Project Mgmt</h3>
+                            <p class="text-xs text-slate-400 font-mono mt-1">Professional Certificate</p>
+                        </div>
+                        <a href="https://www.credly.com/badges/5190d42b-e260-4612-93ca-1bb353bb19cc/linked_in_profile" target="_blank" class="flex items-center text-xs text-blue-200 font-mono gap-2 group-hover:translate-x-1 transition-transform mt-4 md:mt-0">
+                            VIEW CERTIFICATE <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl border-purple-500/30 hover:border-purple-400/50 group relative flex flex-col md:flex-row items-start md:items-center gap-4 transition-all hover:scale-[1.02]">
+                        <div class="p-3 bg-purple-500/20 rounded-lg text-purple-400"><i data-lucide="brain" class="w-8 h-8"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-white font-bold text-sm">Neural Networks & DL</h3>
+                            <p class="text-xs text-slate-400 font-mono mt-1">DeepLearning.AI</p>
+                        </div>
+                        <a href="https://www.coursera.org/account/accomplishments/records/2CQBH7VAL4EJ" target="_blank" class="flex items-center text-xs text-purple-300 font-mono gap-2 group-hover:translate-x-1 transition-transform mt-4 md:mt-0">
+                            VIEW CERTIFICATE <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-12 animate-bounce text-slate-500 flex justify-center">
+                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 relative z-10" data-section-theme="236,72,153">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="reveal-on-scroll text-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-300">Now Loading..</h2>
+                    <p class="text-xs font-mono text-slate-500">CURRENT_FOCUS_AND_EXPLORATION</p>
+                </div>
+                <div id="latent-wrapper" class="glass-card rounded-2xl border-slate-700/50">
+                    <canvas id="latent-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <footer class="relative z-10 py-12 text-center text-slate-500 text-sm bg-black/20 mt-20"><p>© 2025 Avinash Karri. Building digital minds.</p></footer>
+    </main>
+
+    <div id="modal-cypher" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl hidden opacity-0 modal-bg overflow-y-auto flex items-center justify-center"><div class="w-full max-w-6xl bg-slate-900 border border-purple-500/20 rounded-2xl p-8 relative shadow-2xl transform scale-95 modal-content"><button onclick="toggleModal('cypher')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-white/5 rounded-full"><i data-lucide="x" class="w-6 h-6"></i></button><div class="text-center mb-12"><h2 class="text-4xl font-bold text-white mb-2">Project Cypher Architecture</h2><p class="text-purple-400 font-mono">Hybrid AI OS: Edge Intelligence + Cloud Orchestration</p></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8"><div class="glass-card p-6 rounded-xl border border-teal-500/30"><div class="text-teal-400 font-bold text-lg mb-6 flex items-center gap-2"><i data-lucide="smartphone" class="w-5 h-5"></i> EDGE LAYER</div><div class="space-y-4"><div class="diagram-box">Wake Word</div><div class="diagram-arrow">↓</div><div class="diagram-box">Local ASR (WhisperX)</div><div class="diagram-arrow">↓</div><div class="diagram-box border-teal-500/50 bg-teal-900/20">Local PLM</div></div></div><div class="glass-card p-6 rounded-xl border border-purple-500/30 bg-purple-900/10 col-span-1 lg:col-span-2"><div class="text-purple-400 font-bold text-lg mb-6 flex items-center gap-2"><i data-lucide="cloud-lightning" class="w-5 h-5"></i> CLOUD BRAIN</div><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-4"><div class="diagram-box border-purple-500/50 bg-purple-900/30 font-bold">LangGraph Orchestrator</div><div class="grid grid-cols-2 gap-2"><div class="diagram-arrow">↙</div><div class="diagram-arrow">↘</div></div><div class="grid grid-cols-2 gap-4"><div class="diagram-box">Planner (o1)</div><div class="diagram-box">Chat LLM</div></div></div><div class="space-y-4"><div class="diagram-box border-blue-500/50 bg-blue-900/20">Tool Layer</div><div class="grid grid-cols-2 gap-2 text-xs"><div class="diagram-box p-2">Flight API</div><div class="diagram-box p-2">Maps</div><div class="diagram-box p-2">Payments</div><div class="diagram-box p-2">Playwright</div></div></div></div></div></div>
+    <div class="glass-card p-6 rounded-xl mt-8"><h3 class="text-xl font-bold text-white mb-4">Core Tech Stack</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm"><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">ORCHESTRATION</div><div class="text-white font-bold">LangGraph</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">LOCAL ASR</div><div class="text-white font-bold">WhisperX</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">REMOTE LLM</div><div class="text-white font-bold">OpenAI / Gemini</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">VECTOR DB</div><div class="text-white font-bold">Chroma</div></div></div></div></div></div>
+
+    <div id="modal-asteria" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl hidden opacity-0 modal-bg overflow-y-auto flex items-center justify-center"><div class="w-full max-w-6xl bg-slate-900 border border-amber-500/20 rounded-2xl p-8 relative shadow-2xl transform scale-95 modal-content"><button onclick="toggleModal('asteria')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-white/5 rounded-full"><i data-lucide="x" class="w-6 h-6"></i></button><div class="text-center mb-12"><h2 class="text-4xl font-bold text-white mb-2">Asteria AIOps Platform</h2><p class="text-amber-400 font-mono">Enterprise Inference & Root Cause Analysis</p></div><div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-start"><div class="space-y-4 mt-10"><div class="diagram-box border-slate-500">User / Dev Tools</div><div class="diagram-arrow">↓ HTTPS</div><div class="diagram-box border-slate-500">Ingress</div></div><div class="col-span-2 glass-card p-6 border-amber-500/30 bg-amber-900/10"><div class="text-amber-400 font-bold mb-4 text-center">CORE PLATFORM</div><div class="grid grid-cols-2 gap-4"><div class="diagram-box border-amber-500/50 bg-amber-900/30 font-bold">FastAPI (REST)</div><div class="diagram-box">React Frontend</div></div><div class="diagram-arrow my-2">↓</div><div class="grid grid-cols-2 gap-4"><div class="diagram-box border-red-500/50">Redis Queue</div><div class="diagram-box border-blue-500/50">Postgres DB</div></div><div class="diagram-arrow my-2">↓</div><div class="diagram-box border-green-500/50 bg-green-900/20 font-bold">TorchServe</div></div><div class="space-y-4 mt-10"><div class="diagram-box border-orange-500">Prometheus</div><div class="diagram-arrow">↓</div><div class="diagram-box border-orange-500">Grafana</div></div></div>
+    <div class="glass-card p-6 rounded-xl mt-8"><h3 class="text-xl font-bold text-white mb-4">Core Tech Stack</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm"><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">BACKEND</div><div class="text-white font-bold">FastAPI</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">INFERENCE</div><div class="text-white font-bold">TorchServe</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">QUEUE</div><div class="text-white font-bold">Redis</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">MONITORING</div><div class="text-white font-bold">Prometheus</div></div></div></div></div></div>
+
+    <div id="modal-rag" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl hidden opacity-0 modal-bg overflow-y-auto flex items-center justify-center"><div class="w-full max-w-5xl bg-slate-900 border border-blue-500/20 rounded-2xl p-8 relative shadow-2xl transform scale-95 modal-content"><button onclick="toggleModal('rag')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-white/5 rounded-full"><i data-lucide="x" class="w-6 h-6"></i></button><div class="text-center mb-12"><h2 class="text-4xl font-bold text-white mb-2">Enterprise RAG Chatbot</h2><p class="text-blue-400 font-mono">High-Precision Semantic Search</p></div><div class="flex flex-col md:flex-row gap-4 items-center justify-center"><div class="diagram-box w-40">PDF / Docs</div><div class="diagram-arrow">→</div><div class="diagram-box w-40 border-blue-500">Text Splitter</div><div class="diagram-arrow">→</div><div class="diagram-box w-40 border-blue-500 font-bold">Embedding Model</div><div class="diagram-arrow">→</div><div class="diagram-box w-40 border-orange-500 bg-orange-900/20 font-bold">Vector DB</div></div><div class="flex justify-center my-4"><div class="diagram-arrow">↓ (Retrieval)</div></div><div class="flex flex-col md:flex-row gap-4 items-center justify-center"><div class="diagram-box w-40 border-green-500">User Query</div><div class="diagram-arrow">→</div><div class="diagram-box w-40">Context Fusion</div><div class="diagram-arrow">→</div><div class="diagram-box w-40 border-purple-500 bg-purple-900/20 font-bold">LLM (GPT-4)</div><div class="diagram-arrow">→</div><div class="diagram-box w-40">Answer</div></div>
+    <div class="glass-card p-6 rounded-xl mt-8"><h3 class="text-xl font-bold text-white mb-4">Core Tech Stack</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm"><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">FRAMEWORK</div><div class="text-white font-bold">LangChain</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">VECTOR DB</div><div class="text-white font-bold">Pinecone / FAISS</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">CLOUD</div><div class="text-white font-bold">Azure AI</div></div><div class="p-3 bg-white/5 rounded border border-white/5"><div class="text-slate-400 text-xs">MODEL</div><div class="text-white font-bold">GPT-4 / Ada-002</div></div></div></div></div></div>
+
+    <div id="terminal-overlay" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm hidden flex items-center justify-center opacity-0 transition-opacity duration-300"><div class="w-full max-w-3xl bg-slate-950 border border-slate-700 rounded-lg shadow-2xl overflow-hidden font-mono transform scale-95 transition-transform duration-300 relative" id="terminal-box"><button id="terminal-close" class="absolute top-3 right-4 text-slate-500 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button><div class="bg-slate-900/50 px-4 py-3 flex items-center border-b border-slate-800"><div class="flex gap-2 mr-4"><div class="w-3 h-3 rounded-full bg-red-500/80"></div><div class="w-3 h-3 rounded-full bg-yellow-500/80"></div><div class="w-3 h-3 rounded-full bg-green-500/80"></div></div><div class="text-xs text-slate-400 flex items-center gap-2"><i data-lucide="cpu" class="w-3 h-3"></i> guest@avinash-portfolio:~</div></div><div class="p-6 h-96 overflow-y-auto text-sm scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent" id="terminal-body"><div class="text-slate-400 mb-6"><span class="text-cyan-400">Welcome to Nexus OS v2.5</span><br>All systems nominal. Type <span class="text-white font-bold">'help'</span> to execute commands.</div><div id="terminal-history"></div><div class="flex items-center gap-2 text-emerald-400 mt-2"><span>➜</span><span class="text-cyan-400">~</span><input type="text" id="cmd-input" class="bg-transparent border-none outline-none flex-1 text-white font-mono placeholder-slate-600" autocomplete="off" autofocus></div></div></div></div>
+    
+    <button id="terminal-trigger" class="fixed bottom-8 right-8 z-[9999] group flex items-center gap-3 px-5 py-3 bg-slate-900/90 border border-cyan-500/30 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.15)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:border-cyan-400 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="relative"><span class="absolute -inset-1 rounded-full bg-cyan-400/20 animate-ping"></span><i data-lucide="terminal" class="w-5 h-5 text-cyan-400 relative z-10"></i></div>
+        <span class="font-mono text-xs font-bold text-cyan-100 tracking-widest group-hover:text-white">TERMINAL</span>
+    </button>
+
+    <script>
+        // 1. TERMINAL LOGIC (GLOBAL SCOPE)
+        const overlay = document.getElementById('terminal-overlay');
+        const box = document.getElementById('terminal-box');
+        const input = document.getElementById('cmd-input');
+        const history = document.getElementById('terminal-history');
+        const trigger = document.getElementById('terminal-trigger');
+        const closeBtn = document.getElementById('terminal-close');
+        let isOpen = false;
+
+        function toggleTerminal() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => { overlay.classList.remove('opacity-0'); box.classList.remove('scale-95'); input.focus(); }, 10);
+            } else {
+                overlay.classList.add('opacity-0'); box.classList.add('scale-95');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+        
+        // Explicit Event Listeners
+        trigger.addEventListener('click', toggleTerminal);
+        closeBtn.addEventListener('click', toggleTerminal);
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && input.value.trim()) {
+                const cmd = input.value.trim().toLowerCase();
+                history.innerHTML += `<div class="mb-1"><span class="text-emerald-400">➜</span> <span class="text-cyan-400">~</span> ${input.value}</div>`;
+                let resp = `<span class='text-red-400'>Error:</span> Command not found.`;
+                if (cmd === 'help') resp = "AVAILABLE COMMANDS:\n  <span class='text-cyan-400'>about</span>, <span class='text-cyan-400'>projects</span>, <span class='text-cyan-400'>contact</span>, <span class='text-cyan-400'>clear</span>";
+                else if (cmd === 'about') resp = "IDENTITY: Avinash Karri\nROLE: Applied AI Engineer\nSTATUS: Ready for deployment.";
+                else if (cmd === 'projects') resp = "1. Asteria AIOps\n2. Project Cypher\n3. Enterprise RAG";
+                else if (cmd === 'contact') resp = "EMAIL: avinashkarri03@gmail.com";
+                else if (cmd === 'clear') history.innerHTML = "";
+                
+                if(cmd !== 'clear') history.innerHTML += `<div class="mb-4 text-slate-300 whitespace-pre-wrap">${resp}</div>`;
+                input.value = '';
+                document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
+            }
+        });
+
+        // Close on outside click
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) toggleTerminal(); });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // 2. HERO LOGIC
+            const initialHero = document.getElementById('initial-hero');
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const summaryContent = document.getElementById('summary-content');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if (scrollY > 50) {
+                    initialHero.classList.add('fade-out-up');
+                    sidebarContainer.classList.add('visible');
+                    summaryContent.classList.remove('opacity-0', 'translate-y-20');
+                } else {
+                    initialHero.classList.remove('fade-out-up');
+                    sidebarContainer.classList.remove('visible');
+                    summaryContent.classList.add('opacity-0', 'translate-y-20');
+                }
+            });
+
+            // 3. SKILLS LOGIC
+            const categoryGrid = document.getElementById('category-grid');
+            const skillsCategories = [
+                { title: "AI & GenAI", color: "text-purple-400", border: "border-purple-500/30", skills: [{name:"LLMs",icon:"brain-circuit"},{name:"RAG",icon:"database"},{name:"Transformers",icon:"sparkles"},{name:"LangGraph",icon:"network"},{name:"Prompt Eng",icon:"message-square"},{name:"Embeddings",icon:"binary"}], theme:[168,85,247]},
+                { title: "ML Engineering", color: "text-orange-400", border: "border-orange-500/30", skills: [{name:"Scikit-learn",icon:"sigma"},{name:"TensorFlow",icon:"activity"},{name:"Azure OpenAI",icon:"zap"},{name:"Vertex AI",icon:"cpu"}], theme:[249,115,22]},
+                { title: "App Development", color: "text-cyan-400", border: "border-cyan-500/30", skills: [{name:"Python",icon:"code-2"},{name:"SQL",icon:"table"},{name:"JavaScript",icon:"file-code"},{name:"ReactJS",icon:"atom"}], theme:[34,211,238]},
+                { title: "Cloud & Infra", color: "text-blue-400", border: "border-blue-500/30", skills: [{name:"Azure Blob",icon:"cloud"},{name:"Azure Func",icon:"square-function"},{name:"GCP BigQuery",icon:"search"},{name:"Infra Auto",icon:"settings"}], theme:[59,130,246]},
+                { title: "DevOps", color: "text-indigo-400", border: "border-indigo-500/30", skills: [{name:"Docker",icon:"container"},{name:"CI/CD",icon:"git-merge"},{name:"Kubernetes",icon:"ship"},{name:"YAML",icon:"file-text"}], theme:[99,102,241]},
+                { title: "Data & APIs", color: "text-emerald-400", border: "border-emerald-500/30", skills: [{name:"FastAPI",icon:"zap"},{name:"Vector DB",icon:"layers"},{name:"ETL/ELT",icon:"refresh-cw"},{name:"Postgres",icon:"database"}], theme:[16,185,129]}
+            ];
+            let targetR=34, targetG=211, targetB=238;
+            skillsCategories.forEach(cat => {
+                const div = document.createElement('div');
+                div.className = `reveal-on-scroll glass-card p-6 rounded-2xl border ${cat.border} flex flex-col gap-4 transition-all hover:scale-105 cursor-crosshair skill-card-hover`;
+                div.dataset.r = cat.theme[0]; div.dataset.g = cat.theme[1]; div.dataset.b = cat.theme[2]; // Store color data
+                const iconsHtml = cat.skills.map(s => `<div class="skill-icon-wrapper group/icon p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/20 flex items-center justify-center"><i data-lucide="${s.icon}" class="w-5 h-5 ${cat.color}"></i><div class="skill-tooltip">${s.name}</div></div>`).join('');
+                div.innerHTML = `<h3 class="text-xl font-bold text-white border-b border-white/5 pb-4">${cat.title}</h3><div class="grid grid-cols-6 gap-2">${iconsHtml}</div>`;
+                categoryGrid.appendChild(div);
+            });
+            lucide.createIcons();
+
+            // 4. FRONTIER RESEARCH (3D SPHERE)
+            const lCanvas = document.getElementById('latent-canvas');
+            const lCtx = lCanvas.getContext('2d');
+            let lWidth, lHeight;
+            const tags = ["Image Processing","Tesseract","OpenCV","Deep Learning","N8N","Zapier","Playwright","Selenium","DeepSeek-R1", "GraphRAG", "Opal", "Agentic", "Quantum", "AR/XR", "Blender", "Adobe", "FinTech", "Reasoning", "Active Inference", "MCP", "Small-LLMs"];
+            const tagColors = ["#22d3ee", "#a78bfa", "#34d399", "#fbbf24", "#f472b6", "#60a5fa"];
+            const sphere = { radius: 250, points: [] }; // Wider radius
+            function initLatent() {
+                const container = document.getElementById('latent-wrapper');
+                lCanvas.width = lWidth = container.offsetWidth;
+                lCanvas.height = lHeight = container.offsetHeight;
+                sphere.points = [];
+                for(let i=0; i<tags.length; i++) {
+                    const theta = Math.acos(-1 + (2 * i) / tags.length);
+                    const phi = Math.sqrt(tags.length * Math.PI) * theta;
+                    sphere.points.push({ x: sphere.radius * Math.cos(phi) * Math.sin(theta), y: sphere.radius * Math.sin(phi) * Math.sin(theta), z: sphere.radius * Math.cos(theta), text: tags[i], color: tagColors[i % tagColors.length] });
+                }
+            }
+            setTimeout(initLatent, 100); window.addEventListener('resize', initLatent);
+            let angleX = 0.001; let angleY = 0.001; // Slow Rotation
+            function drawLatent() {
+                lCtx.clearRect(0, 0, lWidth, lHeight);
+                const cx = lWidth/2; const cy = lHeight/2;
+                sphere.points.forEach(p => {
+                    let y = p.y * Math.cos(angleX) - p.z * Math.sin(angleX); let z = p.y * Math.sin(angleX) + p.z * Math.cos(angleX); p.y = y; p.z = z;
+                    let x = p.x * Math.cos(angleY) - p.z * Math.sin(angleY); z = p.x * Math.sin(angleY) + p.z * Math.cos(angleY); p.x = x; p.z = z;
+                    const scale = 300 / (300 + p.z); const alpha = (p.z + sphere.radius) / (2 * sphere.radius);
+                    lCtx.font = 'bold 20px monospace'; lCtx.globalAlpha = Math.max(0.2, alpha); lCtx.fillStyle = p.color;
+                    lCtx.fillText(p.text, cx + p.x * scale, cy + p.y * scale); lCtx.globalAlpha = 1.0;
+                });
+                requestAnimationFrame(drawLatent);
+            }
+            drawLatent();
+
+            // 5. BACKGROUND ANIMATION (Global)
+            const canvas = document.getElementById('neural-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, particles = [];
+            let currR = 34, currG = 211, currB = 238;
+            function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize); resize();
+            for(let i=0; i<60; i++) particles.push({x: Math.random()*width, y: Math.random()*height, vx: (Math.random()-.5), vy: (Math.random()-.5), size: Math.random()*2+1});
+            function animate() {
+                currR += (targetR - currR) * 0.05; currG += (targetG - currG) * 0.05; currB += (targetB - currB) * 0.05;
+                const color = `rgba(${Math.floor(currR)}, ${Math.floor(currG)}, ${Math.floor(currB)}`;
+                ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,width,height);
+                particles.forEach((p, i) => {
+                    p.x+=p.vx*0.5; p.y+=p.vy*0.5;
+                    if(p.x<0) p.x=width; if(p.x>width) p.x=0; if(p.y<0) p.y=height; if(p.y>height) p.y=0;
+                    ctx.fillStyle = `${color}, 0.6)`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+                    particles.forEach((p2, j) => {
+                        if(i===j) return;
+                        const d = Math.hypot(p.x-p2.x, p.y-p2.y);
+                        if(d < 150) { ctx.strokeStyle = `${color}, ${1 - d/150})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+                    });
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // SCROLL OBSERVER
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });}, { threshold: 0.1 });
+            setTimeout(() => document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el)), 100);
+            
+            // Global Theme Observer for Sections
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const theme = entry.target.getAttribute('data-section-theme');
+                        if (theme) {
+                            const [r,g,b] = theme.split(',').map(Number);
+                            targetR=r; targetG=g; targetB=b;
+                        }
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('[data-section-theme]').forEach(el => sectionObserver.observe(el));
+        });
+
+        // MODAL LOGIC
+        function toggleModal(id) {
+            const modal = document.getElementById(`modal-${id}`);
+            const content = modal.querySelector('.modal-content');
+            if (modal.classList.contains('hidden')) { modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.remove('scale-95'); }, 10); } 
+            else { modal.classList.add('opacity-0'); content.classList.add('scale-95'); setTimeout(() => modal.classList.add('hidden'), 300); }
+        }
+        document.querySelectorAll('.modal-bg').forEach(modal => { modal.addEventListener('click', (e) => { if (e.target === modal) { toggleModal(modal.id.replace('modal-', '')); }}); });
+    </script>
+</body>
+</html>
